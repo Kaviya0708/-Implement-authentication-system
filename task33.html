@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Authentication System</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#667eea,#764ba2);
+}
+
+.container{
+    width:400px;
+    background:#fff;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 5px 20px rgba(0,0,0,0.3);
+}
+
+h2{
+    text-align:center;
+    margin-bottom:20px;
+    color:#333;
+}
+
+input{
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    border:1px solid #ccc;
+    border-radius:8px;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    background:#667eea;
+    color:white;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#5563d6;
+}
+
+.link{
+    text-align:center;
+    margin-top:15px;
+    color:#667eea;
+    cursor:pointer;
+}
+
+.message{
+    text-align:center;
+    margin-top:15px;
+    font-weight:bold;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+    <div id="signupBox">
+        <h2>Signup</h2>
+
+        <input type="text" id="signupUser" placeholder="Username">
+        <input type="password" id="signupPass" placeholder="Password">
+
+        <button onclick="signup()">Create Account</button>
+
+        <div class="link" onclick="showLogin()">
+            Already have an account? Login
+        </div>
+    </div>
+
+    <div id="loginBox" style="display:none;">
+        <h2>Login</h2>
+
+        <input type="text" id="loginUser" placeholder="Username">
+        <input type="password" id="loginPass" placeholder="Password">
+
+        <button onclick="login()">Login</button>
+
+        <div class="link" onclick="showSignup()">
+            Create New Account
+        </div>
+    </div>
+
+    <div class="message" id="message"></div>
+
+</div>
+
+<script>
+function showLogin(){
+    document.getElementById("signupBox").style.display="none";
+    document.getElementById("loginBox").style.display="block";
+}
+
+function showSignup(){
+    document.getElementById("loginBox").style.display="none";
+    document.getElementById("signupBox").style.display="block";
+}
+
+function signup(){
+
+    let username =
+    document.getElementById("signupUser").value;
+
+    let password =
+    document.getElementById("signupPass").value;
+
+    if(username==="" || password===""){
+        showMessage("Fill all fields","red");
+        return;
+    }
+
+    localStorage.setItem("username",username);
+    localStorage.setItem("password",password);
+
+    showMessage("Account Created Successfully!","green");
+}
+
+function login(){
+
+    let username =
+    document.getElementById("loginUser").value;
+
+    let password =
+    document.getElementById("loginPass").value;
+
+    let savedUser =
+    localStorage.getItem("username");
+
+    let savedPass =
+    localStorage.getItem("password");
+
+    if(username===savedUser && password===savedPass){
+        showMessage("Login Successful!","green");
+    }else{
+        showMessage("Invalid Credentials","red");
+    }
+}
+
+function showMessage(text,color){
+    let msg=document.getElementById("message");
+    msg.innerText=text;
+    msg.style.color=color;
+}
+</script>
+
+</body>
+</html>
